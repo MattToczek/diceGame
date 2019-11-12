@@ -30,13 +30,16 @@ button {
     /* background-color: aliceblue; */
 }
 
-#score {
+input {
     margin: 1rem auto 0 ;
     width: 40%;
     height: 10%;
+    text-align: center;
+}
+
+#score {
     background-color: rgba(240, 248, 255, 0); 
     border: none;
-    text-align: center;
 }
 
 #player{
@@ -51,4 +54,18 @@ button {
     height: 100%;
 }
 
+#inputScreen {
+    position: fixed;
+    z-index: 1;
+    height: 65vw;
+    width: 65vw;
+    background-color: rgb(202, 202, 202);
+    margin-top: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
 
+#instructions {
+    text-align: center;
+}
