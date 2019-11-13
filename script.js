@@ -20,6 +20,7 @@ const scoreReads =[];
 let diceDiv = document.getElementById("dice");
 let rollBtn = document.getElementById("roll");
 let score = document.getElementsByClassName("scores");
+let scoresDiv = document.getElementById("scoresDiv");
 let player = document.getElementById("player");
 let p1Name = document.getElementById("p1Name");
 let p2Name = document.getElementById("p2Name");
@@ -29,6 +30,11 @@ let winningScore = 20;
 let winRead;
 let p1Score = document.getElementById("p1Score");
 let p2Score = document.getElementById("p2Score");
+let p1Label = document.getElementById("p1Label");
+let p2Label = document.getElementById("p2Label");
+let p1SAndL = document.getElementById("p1SAndL");
+let p2SAndL = document.getElementById("p2SAndL");
+
 
 
 for (let i = 0; i < score.length; i++) {
@@ -67,6 +73,8 @@ let gameOverRun = () => {
             currentPlayer[i].rolls=0;
             currentPlayer[i].currNum=0
         }
+        p1Score.value = 0;
+        p2Score.value = 0;
     })
     inputScreen.style.display = "flex";
 }
@@ -77,13 +85,17 @@ let checkScore = () => {
             winRead = `<h2>${currentPlayer[i].name.toUpperCase()} IS THE WINNER!!!</h2>
                         <p>They won with ${currentPlayer[i].rolls} rolls.</p>
                         <button id="reset">Reset<button>`
+                        inputScreen.style.textAlign = "center";
                         gameOverRun();
                         currentPlayer[i].win()
         } else if (currentPlayer[i].currNum >= winningScore){
             winRead = `<h2>You got to ${winningScore} with ${currentPlayer[i].rolls} rolls.</h2>
                         <button id="reset">Reset<button>`
+                        inputScreen.style.textAlign = "center";
                         gameOverRun();
         }
+
+        
         
     }
 }
@@ -109,13 +121,21 @@ playBtn.addEventListener('click', ()=> {
     let player2 = new Player(p2Name.value);
     
     currentPlayer.push(player1);
+    p1Label.textContent = player1.name
     scoreReads.push(p1Score);
+    p1SAndL.style.display = "inline-flex";
+
 
     if(player2.name != "" ){
         currentPlayer.push(player2);        //checks if there is a player2 and adds to currentPlayer if there is
+        p2Label.textContent = player2.name
         scoreReads.push(p2Score);
+        p2SAndL.style.display = "inline-flex";
+
     }
 
+    scoresDiv.style.display = "flex";
+    scoresDiv.style.justifyContent = "space-around";
     inputScreen.style.display = "none";
     console.log(currentPlayer)
     setName();

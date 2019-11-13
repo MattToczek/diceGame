@@ -72,3 +72,22 @@ input {
 #instructions {
     text-align: center;
 }
+
+#scoreDiv {
+    flex-direction: row;
+}
+
+.scoreWrap {
+    width: 40%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#p1SAndL,
+#p2SAndL{    
+    display: none;
+    margin: 0.5rem auto 0;
+    flex-direction: column;
+}
