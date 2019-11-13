@@ -84,13 +84,13 @@ let checkScore = () => {
         if (currentPlayer[i].currNum >= winningScore && currentPlayer.length > 1) {
             winRead = `<h2>${currentPlayer[i].name.toUpperCase()} IS THE WINNER!!!</h2>
                         <p>They won with ${currentPlayer[i].rolls} rolls.</p>
-                        <button id="reset">Reset<button>`
+                        <button id="reset">Reset</button>`
                         inputScreen.style.textAlign = "center";
                         gameOverRun();
                         currentPlayer[i].win()
         } else if (currentPlayer[i].currNum >= winningScore){
             winRead = `<h2>You got to ${winningScore} with ${currentPlayer[i].rolls} rolls.</h2>
-                        <button id="reset">Reset<button>`
+                        <button id="reset">Reset</button>`
                         inputScreen.style.textAlign = "center";
                         gameOverRun();
         }
