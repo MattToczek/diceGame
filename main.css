@@ -57,7 +57,7 @@ input {
     height: 100%;
 }
 
-.inputScreen {
+#inputScreen {
     position: fixed;
     z-index: 1;
     height: 65vw;
@@ -90,8 +90,4 @@ input {
     display: none;
     margin: 0.5rem auto 0;
     flex-direction: column;
-}
-
-#input2{
-    display: none;
 }
