@@ -69,6 +69,14 @@ input {
     justify-content: flex-end;
 }
 
+#inputScreen button {
+    margin-bottom: 1rem;
+}
+
+#inputScreen h2 {
+    margin: auto;
+}
+
 #instructions {
     text-align: center;
 }
