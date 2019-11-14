@@ -83,6 +83,7 @@ let setName = () => {
 }
 
 let gameOverRun = () => {
+    upWins();
     inputScreen.innerHTML = winRead;
     let reset = document.getElementById("reset");
     reset.addEventListener('click', () => {
@@ -97,16 +98,27 @@ let gameOverRun = () => {
     inputScreen.style.display = "flex";
 }
 
-
+let oneCheck = () => {
+   
+    winRead = `<h2>${currentPlayer[1].name.toUpperCase()} lost: they rolled a one!!!</h2>
+                <button id="reset">Reset</button>`;
+    checkScore();
+    gameOverRun();
+    
+}
 
 
 
 let getDice = () => {                          //randomly adds score and displays relevant dice image
     let num = diceRoll();
     diceDiv.innerHTML = `<img class="diceImg" src="img/dice${num}.png"/>`
+    if (num ==1) {
+        oneCheck();
+    } else{
     addScore(num);
     switchPlayers();
     setName();
+    }  
 }
 
 playBtn.addEventListener('click', ()=> {
@@ -146,6 +158,8 @@ playBtn.addEventListener('click', ()=> {
     
 });
 
+
+
 let addScore = (num) => {
     currentPlayer[0].currNum += num; 
     scoreReads[0].value = currentPlayer[0].currNum;
@@ -173,15 +187,18 @@ let upWins = () => {
 }
 
 let checkScore = () => {
+
+    //check for a roll of one and lose if true
+
+
     for (let i = 0; i < currentPlayer.length; i++) {
-        
+
         if (currentPlayer[i].currNum >= winningScore && currentPlayer.length > 1) {
             winRead = `<h2>${currentPlayer[i].name.toUpperCase()} IS THE WINNER!!!</h2>
                         <p>They won with ${currentPlayer[i].rolls} rolls.</p>
                         <button id="reset">Reset</button>`
                         inputScreen.style.textAlign = "center";
                         updateRolls();
-                        upWins();
                         gameOverRun();
                         currentPlayer[i].win()
 
@@ -190,7 +207,6 @@ let checkScore = () => {
                         <button id="reset">Reset</p1button>`
                         inputScreen.style.textAlign = "center";
                         updateRolls();
-                        p1Wins.value ++;
                         gameOverRun();
         }
 
@@ -201,5 +217,4 @@ let checkScore = () => {
 
 rollBtn.addEventListener('click', ()=> {
     getDice();
-
 });
