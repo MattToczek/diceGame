@@ -28,7 +28,7 @@ let p1Name = document.getElementById("p1Name");
 let p2Name = document.getElementById("p2Name");
 let playBtn = document.getElementById("play");
 let inputScreen = document.getElementById("inputScreen");
-let winningScore = 20;
+let losingScore = 20;
 let winRead;
 let p1Score = document.getElementById("p1Score");
 let p2Score = document.getElementById("p2Score");
@@ -50,6 +50,7 @@ let p2WinRead = document.getElementById("p2WinRead");
 let p2Wins = document.getElementById("p2Wins");
 let p1HoldBtn = document.getElementById("p1HoldBtn");
 let p2HoldBtn = document.getElementById("p2HoldBtn");
+let holdArr = [p1HoldBtn, p2HoldBtn];
 
 p1Lowest.value = 0;
 p2Lowest.value = 0;
@@ -62,6 +63,11 @@ for (let i = 0; i < score.length; i++) {
     
 } 
 
+let holdVisible = () => {
+    holdArr = [holdArr[1], holdArr[0]];
+    holdArr[0].style.display = "block";
+    holdArr[1].style.display = "none";
+}
 
 let diceRoll = () => {
     return 1 + Math.floor(Math.random() * 6);
@@ -75,6 +81,7 @@ let switchPlayers = () => {
         scoreReads[0] = scoreReads[1];
         currentPlayer[1] = temp;
         scoreReads[1] = tempScore;
+        holdVisible();
         setName();
     }
     
@@ -135,7 +142,7 @@ playBtn.addEventListener('click', ()=> {
     p1SAndL.style.display = "inline-flex";
     let p1StatHead = document.createElement("LI");
     p1StatHead.textContent = `${player1.name}'s rolls:`;
-    p1LowestLab.textContent = `${player1.name}'s lowest number of rolls:`;
+    p1LowestLab.textContent = `${player1.name}'s lowest rolls to lose:`;
     p1WinLab.textContent = `${player1.name}'s wins:`;
     p1Stats.style.display = "flex";
     p1WinRead.style.display = "none";
@@ -150,7 +157,7 @@ playBtn.addEventListener('click', ()=> {
         p2SAndL.style.display = "inline-flex";
         let p2StatHead = document.createElement("LI");
         p2StatHead.textContent = `${player2.name}'s rolls:`;
-        p2LowestLab.textContent = `${player2.name}'s lowest number of rolls:`;
+        p2LowestLab.textContent = `${player2.name}'s lowest rolls to lose:`;
         p2WinLab.textContent = `${player2.name}'s wins:`;
         p2Stats.style.display = "flex";
         p1WinRead.style.display = "flex";
@@ -188,9 +195,11 @@ let updateRolls = ()=> {
 
 let upWins = () => {
     if(currentPlayer[0] == player1){
-        p1Wins.value ++;
-    }else{
         p2Wins.value ++;
+        player2.win()
+    }else{
+        p1Wins.value ++;
+        player1.win()
     }
 }
 
@@ -201,17 +210,21 @@ let checkScore = () => {
 
     for (let i = 0; i < currentPlayer.length; i++) {
 
-        if (currentPlayer[i].currNum >= winningScore && currentPlayer.length > 1) {
-            winRead = `<h2>${currentPlayer[i].name.toUpperCase()} IS THE WINNER!!!</h2>
-                        <p>They won with ${currentPlayer[i].rolls} rolls.</p>
+        if (currentPlayer[i].currNum >= losingScore && currentPlayer.length > 1) {
+            winRead = `<h2>${currentPlayer[i].name.toUpperCase()} LOST!!!</h2>
+                        <p>They rolled ${currentPlayer[i].rolls} times.</p>
                         <button id="reset">Reset</button>`
                         inputScreen.style.textAlign = "center";
                         updateRolls();
                         gameOverRun();
-                        currentPlayer[i].win()
+                        // if(currentPlayer[i] == player1){
+                        //     player2.win()
+                        // } else {
+                        //     player1.win()
+                        // }
 
-        } else if (currentPlayer[i].currNum >= winningScore){
-            winRead = `<h2>You got to ${winningScore} with ${currentPlayer[i].rolls} rolls.</h2>
+        } else if (currentPlayer[i].currNum >= losingScore){
+            winRead = `<h2>You got to ${losingScore} with ${currentPlayer[i].rolls} rolls.</h2>
                         <button id="reset">Reset</p1button>`
                         inputScreen.style.textAlign = "center";
                         updateRolls();
