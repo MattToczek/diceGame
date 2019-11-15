@@ -26,6 +26,11 @@ body {
     flex-direction: column;
 }
 
+#twoPlayerStats div {
+    display: flex;
+    flex-direction: column;
+}
+
 button {
     margin: 1rem auto 0;
     width: 40px;
@@ -127,7 +132,7 @@ ul {
 
 #p1Stats,
 #p2Stats{
-    display: none;
+    display: none ;
     flex-direction: column;
     justify-content: center;
     text-align: center;

@@ -5,6 +5,7 @@ class Player {
         this.score = 0;
         this.currNum = 0;
         this.rolls = 0;
+        this.hold = false;
     }
 
     win(){
@@ -47,6 +48,8 @@ let p2LowLab = document.getElementById("p2LowestLab");
 let p2WinLab = document.getElementById("p2WinLab");
 let p2WinRead = document.getElementById("p2WinRead");
 let p2Wins = document.getElementById("p2Wins");
+let p1HoldBtn = document.getElementById("p1HoldBtn");
+let p2HoldBtn = document.getElementById("p2HoldBtn");
 
 p1Lowest.value = 0;
 p2Lowest.value = 0;
@@ -65,13 +68,14 @@ let diceRoll = () => {
 }
 
 let switchPlayers = () => {
-    if (currentPlayer.length>1) {
+    if (currentPlayer.length>1 && currentPlayer[0].hold == false) {
         let temp = currentPlayer[0];
         let tempScore = scoreReads[0];
         currentPlayer[0] = currentPlayer[1];
         scoreReads[0] = scoreReads[1];
         currentPlayer[1] = temp;
         scoreReads[1] = tempScore;
+        setName();
     }
     
 }
@@ -90,7 +94,8 @@ let gameOverRun = () => {
         inputScreen.style.display = "none";
         for (let i = 0; i < currentPlayer.length; i++) {
             currentPlayer[i].rolls=0;
-            currentPlayer[i].currNum=0
+            currentPlayer[i].currNum=0;
+            currentPlayer[i].hold=false;
         }
         p1Score.value = 0;
         p2Score.value = 0;
@@ -100,7 +105,7 @@ let gameOverRun = () => {
 
 let oneCheck = () => {
    
-    winRead = `<h2>${currentPlayer[1].name.toUpperCase()} lost: they rolled a one!!!</h2>
+    winRead = `<h2>${currentPlayer[0].name.toUpperCase()} lost: they rolled a one!!!</h2>
                 <button id="reset">Reset</button>`;
     checkScore();
     gameOverRun();
@@ -115,9 +120,8 @@ let getDice = () => {                          //randomly adds score and display
     if (num ==1) {
         oneCheck();
     } else{
-    addScore(num);
-    switchPlayers();
-    setName();
+        addScore(num);
+        switchPlayers();
     }  
 }
 
@@ -134,8 +138,10 @@ playBtn.addEventListener('click', ()=> {
     p1LowestLab.textContent = `${player1.name}'s lowest number of rolls:`;
     p1WinLab.textContent = `${player1.name}'s wins:`;
     p1Stats.style.display = "flex";
+    p1WinRead.style.display = "none";
+    p2Stats.style.display = "none";
 
-
+    
 
     if(player2.name != "" ){
         currentPlayer.push(player2);        //checks if there is a player2 and adds to currentPlayer if there is
@@ -147,6 +153,8 @@ playBtn.addEventListener('click', ()=> {
         p2LowestLab.textContent = `${player2.name}'s lowest number of rolls:`;
         p2WinLab.textContent = `${player2.name}'s wins:`;
         p2Stats.style.display = "flex";
+        p1WinRead.style.display = "flex";
+        
 
     }
 
@@ -214,6 +222,16 @@ let checkScore = () => {
         
     }
 }
+
+p1HoldBtn.addEventListener('click', ()=> {
+    switchPlayers();
+    player2.hold = true;
+});
+
+p2HoldBtn.addEventListener('click', ()=> {
+    switchPlayers();
+    player1.hold = true;
+});
 
 rollBtn.addEventListener('click', ()=> {
     getDice();
